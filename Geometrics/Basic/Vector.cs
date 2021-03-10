@@ -2,22 +2,22 @@
 
 namespace Geometrics.Basic
 {
-    public class Vector
+    public class Vector : Point
     {
-        public double X { get; }
-        public double Y { get; }
-        public double Z { get; }
-
-        public double Mag
+        public double Magnitude
         {
             get => Math.Sqrt((this.X * this.X) + (this.Y * this.Y) + (this.Z * this.Z));
         }
 
-        public Vector(double x, double y, double z)
+        protected Vector() : base() { }
+
+        public Vector(double x, double y, double z) : base(x, y, z) { }
+
+        public Vector(Point source, Point destination) : base()
         {
-            this.X = x;
-            this.Y = y;
-            this.Z = z;
+            this.X = destination.X - source.X;
+            this.Y = destination.Y - source.Y;
+            this.Z = destination.Z - source.Z;
         }
 
         public static Vector operator +(Vector a, Vector b)
@@ -51,6 +51,7 @@ namespace Geometrics.Basic
         {
             return (this.X * other.X) + (this.Y * other.Y) + (this.Z * other.Z);
         }
+
         public Vector Cross(Vector other)
         {
             double x = (this.Y * other.Z) - (this.Z * other.Y);
