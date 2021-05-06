@@ -2,18 +2,22 @@
 
 namespace Geometrics.Basic
 {
-    public class Vector : Point
+    public record Vector
     {
-        public double Magnitude
+        public double X { get; init; }
+        public double Y { get; init; }
+        public double Z { get; init; }
+
+        public Vector(double x, double y, double z)
         {
-            get => Math.Sqrt((this.X * this.X) + (this.Y * this.Y) + (this.Z * this.Z));
+            this.X = x;
+            this.Y = y;
+            this.Z = z;
         }
 
-        protected Vector() : base() { }
+        public double Magnitude => Math.Sqrt((this.X * this.X) + (this.Y * this.Y) + (this.Z * this.Z));
 
-        public Vector(double x, double y, double z) : base(x, y, z) { }
-
-        public Vector(Point source, Point destination) : base()
+        public Vector(Vector source, Vector destination) : base()
         {
             this.X = destination.X - source.X;
             this.Y = destination.Y - source.Y;
@@ -38,11 +42,11 @@ namespace Geometrics.Basic
             return new Vector(x, y, z);
         }
 
-        public static Vector operator *(Vector a, double scalar)
+        public Vector Scale(double scalar)
         {
-            double x = a.X * scalar;
-            double y = a.Y * scalar;
-            double z = a.Z * scalar;
+            double x = X * scalar;
+            double y = Y * scalar;
+            double z = Z * scalar;
 
             return new Vector(x, y, z);
         }
@@ -57,7 +61,7 @@ namespace Geometrics.Basic
             double x = (this.Y * other.Z) - (this.Z * other.Y);
             double y = (this.Z * other.X) - (this.X * other.Z);
             double z = (this.X * other.Y) - (this.Y * other.X);
-            
+
             return new Vector(x, y, z);
         }
     }
